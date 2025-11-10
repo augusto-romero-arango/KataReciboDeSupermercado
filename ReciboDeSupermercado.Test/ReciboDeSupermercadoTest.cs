@@ -100,6 +100,17 @@ public class ReciboDeSupermercadoTest
         resultado.Should().Throw<ArgumentException>()
             .WithMessage(Producto.EL_PRECIO_DEL_PRODUCTO_DEBE_SER_MAYOR_A_CERO);
     }
+
+    [Fact]
+    public void Si_AgregoUnProductoArrozConDescuentoPorcentualDel10_Debe_AplicarElDescuentoAlTotal()
+    {
+        var recibo = new Recibo();
+        
+        recibo.AgregarProducto("Arroz", 2.49m);
+        recibo.AplicarPromocion();
+        
+        recibo.Total.Should().Be(2.241m);
+    }
 }
 
 public class Recibo
@@ -122,5 +133,10 @@ public class Recibo
         {
             _productos.Add(new Producto(productoDescripcion, precio));
         }
+    }
+
+    public void AplicarPromocion()
+    {
+        throw new NotImplementedException();
     }
 }
