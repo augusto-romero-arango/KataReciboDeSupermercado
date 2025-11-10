@@ -101,7 +101,7 @@ public class ReciboDeSupermercadoTest
         Action resultado = () => recibo.AgregarProducto("Leche", 0m);
 
         resultado.Should().Throw<ArgumentException>()
-            .WithMessage("El precio del producto debe ser mayor a cero.");
+            .WithMessage(Recibo.EL_PRECIO_DEL_PRODUCTO_DEBE_SER_MAYOR_A_CERO);
     }
 }
 
@@ -109,6 +109,9 @@ public class Recibo
 {
     public const string LA_DESCRIPCION_DEL_PRODUCTO_NO_PUEDE_ESTAR_VACIA =
         "La descripcion del producto no puede estar vacía";
+
+    public const string? EL_PRECIO_DEL_PRODUCTO_DEBE_SER_MAYOR_A_CERO = 
+        "El precio del producto debe ser mayor a cero.";
 
     private readonly List<Producto> _productos = new();
     public IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
@@ -120,7 +123,7 @@ public class Recibo
             throw new ArgumentException(LA_DESCRIPCION_DEL_PRODUCTO_NO_PUEDE_ESTAR_VACIA);
 
         if (precio <= 0)
-            throw new ArgumentException("El precio del producto debe ser mayor a cero.");
+            throw new ArgumentException(EL_PRECIO_DEL_PRODUCTO_DEBE_SER_MAYOR_A_CERO);
 
         var productoExistente = _productos.Find(p => p.Nombre == productoDescripcion);
 
