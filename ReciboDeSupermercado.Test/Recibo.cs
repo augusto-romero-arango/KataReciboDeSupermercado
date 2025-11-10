@@ -68,4 +68,9 @@ public class Recibo
     {
         return _productos.Find(p => p.Nombre == nombreProducto);
     }
+
+    public void AplicarPromocionPrecioFijo()
+    {
+        throw new NotImplementedException();
+    }
 }

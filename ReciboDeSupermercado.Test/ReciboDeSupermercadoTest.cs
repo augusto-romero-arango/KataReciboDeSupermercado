@@ -199,5 +199,18 @@ public class ReciboDeSupermercadoTest
         
         recibo.Total.Should().Be(14.98m);
     }
+
+    [Fact]
+    public void Si_Compro2CajasDeTomatesConPromocion2x099_Debe_Pagar099()
+    {
+        var recibo = new Recibo();
+        
+        recibo.AgregarProducto("Tomates cherry", 0.50m);
+        recibo.AgregarProducto("Tomates cherry", 0.50m);
+        
+        recibo.AplicarPromocionPrecioFijo();
+        
+        recibo.Total.Should().Be(0.99m);
+    }
     
 }
