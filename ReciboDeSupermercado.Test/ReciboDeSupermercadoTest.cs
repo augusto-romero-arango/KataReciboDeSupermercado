@@ -44,10 +44,28 @@ public class Recibo
 {
     private decimal _total;
     public decimal Total => _total;
-    public List<Producto> Productos { get; set; }
+    public List<Producto> Productos { get; set; } = new List<Producto>();
 
     public void AgregarProducto(string productoDescripcion, decimal precio)
     {
-        _total += precio;
+        var productoExistente = Productos.Find(p => p.Nombre == productoDescripcion);
+
+        if (productoExistente != null)
+        {
+            productoExistente.Cantidad++;
+            _total += precio;
+        }
+        else
+        {
+            var nuevoProducto = new Producto
+            {
+                Nombre = productoDescripcion,
+                Precio = precio,
+                Cantidad = 1
+            };
+            Productos.Add(nuevoProducto);
+            _total += precio;
+        }
+
     }
 }
