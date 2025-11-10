@@ -49,6 +49,18 @@ public class Recibo
 
     public void AplicarPromocionPack(string nombreProducto, int cantidad, decimal precioFijo)
     {
-        throw new NotImplementedException();
+        var producto = _productos.Find(p => p.Nombre == nombreProducto);
+
+        if (producto == null) return;
+        
+        int packsCompletos = producto.Cantidad / cantidad;
+    
+        decimal precioNormalPack = cantidad * producto.Precio;
+    
+        decimal ahorroPorPack = precioNormalPack - precioFijo;
+    
+        decimal descuento = packsCompletos * ahorroPorPack;
+    
+        _descuentoTotal += descuento;
     }
 }
