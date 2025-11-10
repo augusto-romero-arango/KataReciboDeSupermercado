@@ -139,6 +139,20 @@ public class ReciboDeSupermercadoTest
         
         recibo.Total.Should().Be(3.833m); 
     }
+
+    [Fact]
+    public void  Si_Agrego3CepillosDeDientesConPromocion2x1Gratis_Debe_PagarSolo2()
+    {
+        var recibo = new Recibo();
+    
+        recibo.AgregarProducto("Cepillo de dientes", 0.99m);
+        recibo.AgregarProducto("Cepillo de dientes", 0.99m);
+        recibo.AgregarProducto("Cepillo de dientes", 0.99m);
+    
+        recibo.AplicarPromocionNxM("Cepillo de dientes", compra: 2, lleva: 3);
+        
+        recibo.Total.Should().Be(1.98m);
+    }
 }
 
 public class Recibo
@@ -171,5 +185,10 @@ public class Recibo
         {
             _descuentoTotal += producto.Subtotal * (porcentaje / 100m);
         }
+    }
+
+    public void AplicarPromocionNxM(string cepilloDeDientes, int compra, int lleva)
+    {
+        throw new NotImplementedException();
     }
 }
