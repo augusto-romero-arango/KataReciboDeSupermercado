@@ -53,12 +53,9 @@ public class ReciboDeSupermercadoTest
     [Fact]
     public void CadaProductoDebeTenerUnSubtotal_IgualAlPrecioPorCantidad()
     {
-        var producto = new Producto
-        {
-            Nombre = "Arroz",
-            Precio = 2.49m,
-            Cantidad = 3
-        };
+        var producto = new Producto("Arroz", 2.49m);
+        producto.IncrementarCantidad();
+        producto.IncrementarCantidad();
 
         producto.Subtotal.Should().Be(2.49m * 3);
     }
@@ -90,7 +87,7 @@ public class ReciboDeSupermercadoTest
         Action resultado = () => recibo.AgregarProducto("", 0.99m);
 
         resultado.Should().Throw<ArgumentException>()
-            .WithMessage(Recibo.LA_DESCRIPCION_DEL_PRODUCTO_NO_PUEDE_ESTAR_VACIA);
+            .WithMessage(Producto.LA_DESCRIPCION_DEL_PRODUCTO_NO_PUEDE_ESTAR_VACIA);
     }
 
     [Fact]
@@ -101,17 +98,13 @@ public class ReciboDeSupermercadoTest
         Action resultado = () => recibo.AgregarProducto("Leche", 0m);
 
         resultado.Should().Throw<ArgumentException>()
-            .WithMessage(Recibo.EL_PRECIO_DEL_PRODUCTO_DEBE_SER_MAYOR_A_CERO);
+            .WithMessage(Producto.EL_PRECIO_DEL_PRODUCTO_DEBE_SER_MAYOR_A_CERO);
     }
 }
 
 public class Recibo
 {
-    public const string LA_DESCRIPCION_DEL_PRODUCTO_NO_PUEDE_ESTAR_VACIA =
-        "La descripcion del producto no puede estar vacía";
-
-    public const string? EL_PRECIO_DEL_PRODUCTO_DEBE_SER_MAYOR_A_CERO = 
-        "El precio del producto debe ser mayor a cero.";
+   
 
     private readonly List<Producto> _productos = new();
     public IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
@@ -119,27 +112,15 @@ public class Recibo
 
     public void AgregarProducto(string productoDescripcion, decimal precio)
     {
-        if (string.IsNullOrWhiteSpace(productoDescripcion))
-            throw new ArgumentException(LA_DESCRIPCION_DEL_PRODUCTO_NO_PUEDE_ESTAR_VACIA);
-
-        if (precio <= 0)
-            throw new ArgumentException(EL_PRECIO_DEL_PRODUCTO_DEBE_SER_MAYOR_A_CERO);
-
         var productoExistente = _productos.Find(p => p.Nombre == productoDescripcion);
 
         if (productoExistente != null)
         {
-            productoExistente.Cantidad++;
+            productoExistente.IncrementarCantidad();
         }
         else
         {
-            var nuevoProducto = new Producto
-            {
-                Nombre = productoDescripcion,
-                Precio = precio,
-                Cantidad = 1
-            };
-            _productos.Add(nuevoProducto);
+            _productos.Add(new Producto(productoDescripcion, precio));
         }
     }
 }
