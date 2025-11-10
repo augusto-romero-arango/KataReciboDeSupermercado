@@ -21,6 +21,17 @@ public class ReciboDeSupermercadoTest
 
         recibo.Total.Should().Be(0.99m);
     }
+
+    [Fact]
+    public void Si_AdicionoDosProductosAlReciboElTotal_Debe_MostrarLaSumaDeAmbos()
+    {
+        var recibo = new Recibo();
+
+        recibo.AgregarProducto("Cepillo de dientes", 0.99m);
+        recibo.AgregarProducto("Arroz", 2.49m);
+
+        recibo.Total.Should().Be(0.99m + 2.49m);
+    }
 }
 
 public class Recibo
