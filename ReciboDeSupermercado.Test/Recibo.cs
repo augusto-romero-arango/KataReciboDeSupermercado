@@ -24,7 +24,7 @@ public class Recibo
 
     public void AplicarPromocion(string nombreProducto, decimal porcentaje)
     {
-        var producto = _productos.Find(p => p.Nombre == nombreProducto);
+        var producto = BuscarProducto(nombreProducto);
 
         if (producto != null)
         {
@@ -34,7 +34,7 @@ public class Recibo
 
     public void AplicarPromocionNxM(string nombreProducto, int compra, int lleva)
     {
-        var producto = _productos.Find(p => p.Nombre == nombreProducto);
+        var producto = BuscarProducto(nombreProducto);
         
         if (producto == null) return;
 
@@ -49,7 +49,7 @@ public class Recibo
 
     public void AplicarPromocionPack(string nombreProducto, int cantidad, decimal precioFijo)
     {
-        var producto = _productos.Find(p => p.Nombre == nombreProducto);
+        var producto = BuscarProducto(nombreProducto);
 
         if (producto == null) return;
         
@@ -62,5 +62,10 @@ public class Recibo
         decimal descuento = packsCompletos * ahorroPorPack;
     
         _descuentoTotal += descuento;
+    }
+
+    private Producto? BuscarProducto(string nombreProducto)
+    {
+        return _productos.Find(p => p.Nombre == nombreProducto);
     }
 }

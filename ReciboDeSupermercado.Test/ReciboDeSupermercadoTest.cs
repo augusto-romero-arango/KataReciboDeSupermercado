@@ -169,4 +169,5 @@ public class ReciboDeSupermercadoTest
         
         recibo.Total.Should().Be(7.49m);
     }
+    
 }
