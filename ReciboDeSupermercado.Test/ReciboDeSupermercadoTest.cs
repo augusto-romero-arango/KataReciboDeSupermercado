@@ -107,7 +107,7 @@ public class ReciboDeSupermercadoTest
         var recibo = new Recibo();
         
         recibo.AgregarProducto("Arroz", 2.49m);
-        recibo.AplicarPromocion();
+        recibo.AplicarPromocion("Arroz", porcentaje:10);
         
         recibo.Total.Should().Be(2.241m);
     }
@@ -115,11 +115,11 @@ public class ReciboDeSupermercadoTest
 
 public class Recibo
 {
-   
-
     private readonly List<Producto> _productos = new();
+    private decimal _descuentoTotal = 0m;
     public IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
-    public decimal Total => Productos.Sum(p => p.Precio * p.Cantidad);
+    public decimal Total => Productos.Sum(p => p.Precio * p.Cantidad) - _descuentoTotal;
+    
 
     public void AgregarProducto(string productoDescripcion, decimal precio)
     {
@@ -135,8 +135,14 @@ public class Recibo
         }
     }
 
-    public void AplicarPromocion()
+    public void AplicarPromocion(string nombreProducto, int porcentaje)
     {
-        throw new NotImplementedException();
+        var producto = _productos.Find(p => p.Nombre == nombreProducto);
+
+        if (producto != null)
+        {
+            var subtotal = producto.Precio * producto.Cantidad;
+            _descuentoTotal += subtotal * (porcentaje / 100m);
+        }
     }
 }
