@@ -9,9 +9,7 @@ public class PromocionLLeveXPagueX : IPromocion
     public PromocionLLeveXPagueX(string nombreProducto, int compra, int lleva)
     {
         if (lleva <= compra)
-        {
             throw new ArgumentException("La cantidad de llevar debe ser mayor a la de comprar");
-        }
         
         NombreProducto = nombreProducto;
         _compra = compra;
