@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace ReciboDeSupermercado.Test;
 
 public class Recibo
@@ -68,6 +70,16 @@ public class Recibo
 
     public string GenerarRecibo()
     {
-        return "Pasta de dientes 1.79 Arroz 2.49 TOTAL 4.28";
+        var reciboImpreso = new StringBuilder();
+
+        foreach (var producto in _productos)
+        {
+            reciboImpreso.AppendLine($"{producto.Nombre,-20} x{producto.Cantidad,-5} ${producto.Subtotal}");
+        }
+
+        reciboImpreso.AppendLine("".PadRight(40, '-'));
+        reciboImpreso.AppendLine($"{"TOTAL:",-30} ${Total:F2}");
+        
+        return reciboImpreso.ToString();
     }
 }
