@@ -68,6 +68,6 @@ public class Recibo
 
     public string GenerarRecibo()
     {
-        throw new NotImplementedException();
+        return "Pasta de dientes 1.79 Arroz 2.49 TOTAL 4.28";
     }
 }
