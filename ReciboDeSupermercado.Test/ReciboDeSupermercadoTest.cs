@@ -269,12 +269,3 @@ public class ReciboDeSupermercadoTest
     }
     
 }
-
-public enum UnidadMedida
-{
-    Unidad,
-    Kilo,
-    Saco,
-    Tubo,
-    Caja
-}

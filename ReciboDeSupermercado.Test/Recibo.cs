@@ -59,7 +59,7 @@ public class Recibo
 
         foreach (var producto in _productos)
         {
-            string unidadTexto = ObtenerTextoUnidad(producto.Unidad);
+            string unidadTexto = producto.Unidad.ObtenerDescripcion();
             reciboImpreso.AppendLine($"{producto.Nombre,-20} x{producto.Cantidad} {unidadTexto,-5} ${producto.Subtotal:F2}");
         }
 
@@ -94,18 +94,5 @@ public class Recibo
         reciboImpreso.AppendLine($"{"TOTAL:",-30} ${Total:F2}");
         
         return reciboImpreso.ToString();
-    }
-
-    private string ObtenerTextoUnidad(UnidadMedida unidad)
-    {
-        return unidad switch
-        {
-            UnidadMedida.Kilo => "kg",
-            UnidadMedida.Saco => "saco",
-            UnidadMedida.Tubo => "tubo",
-            UnidadMedida.Caja => "caja",
-            UnidadMedida.Unidad => "ud",
-            _ => ""
-        };
     }
 }
