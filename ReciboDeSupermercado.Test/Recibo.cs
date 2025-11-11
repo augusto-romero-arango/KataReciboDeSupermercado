@@ -38,21 +38,6 @@ public class Recibo
         _promociones.Add(promocion);
     }
 
-    public void AplicarDescuentoPorcentual(string nombreProducto, decimal porcentaje)
-    {
-        AplicarPromocion(new PromocionDescuentoPorcentual(nombreProducto, porcentaje));
-    }
-
-    public void PromocionLLeveXPagueX(string nombreProducto, int compra, int lleva)
-    {
-        AplicarPromocion(new PromocionLLeveXPagueX(nombreProducto, compra, lleva));
-    }
-
-    public void AplicarPromocionPackPrecioFijo(string nombreProducto, int cantidad, decimal precioFijo)
-    {
-        AplicarPromocion(new PromocionPackPrecioFijo(nombreProducto, cantidad, precioFijo));
-    }
-
     private decimal CalcularDescuentoTotal()
     {
         decimal total = 0m;
