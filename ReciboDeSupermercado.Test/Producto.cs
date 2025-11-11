@@ -10,9 +10,10 @@ public class Producto
     public string Nombre { get; }
     public decimal Precio { get;  }
     public int Cantidad { get; private set; }
+    public UnidadMedida Unidad { get; }
     public decimal Subtotal => Cantidad * Precio;
 
-    public Producto(string nombre, decimal precio)
+    public Producto(string nombre, decimal precio, UnidadMedida unidad = UnidadMedida.Unidad)
     {
         if (string.IsNullOrWhiteSpace(nombre))
             throw new ArgumentException(LA_DESCRIPCION_DEL_PRODUCTO_NO_PUEDE_ESTAR_VACIA);
@@ -21,6 +22,7 @@ public class Producto
 
         Nombre = nombre;
         Precio = precio;
+        Unidad = unidad;
         Cantidad = 1;
     }
     

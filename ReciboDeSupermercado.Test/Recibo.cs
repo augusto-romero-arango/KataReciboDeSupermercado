@@ -19,7 +19,7 @@ public class Recibo
     }
 
 
-    public void AgregarProducto(string productoDescripcion, decimal precio, UnidadMedida? unidad)
+    public void AgregarProducto(string productoDescripcion, decimal precio, UnidadMedida unidad = UnidadMedida.Unidad)
     {
         var productoExistente = _productos.Find(p => p.Nombre == productoDescripcion);
 
@@ -29,7 +29,7 @@ public class Recibo
         }
         else
         {
-            _productos.Add(new Producto(productoDescripcion, precio));
+            _productos.Add(new Producto(productoDescripcion, precio, unidad));
         }
     }
 
@@ -59,7 +59,8 @@ public class Recibo
 
         foreach (var producto in _productos)
         {
-            reciboImpreso.AppendLine($"{producto.Nombre,-20} x{producto.Cantidad,-5} ${producto.Subtotal}");
+            string unidadTexto = ObtenerTextoUnidad(producto.Unidad);
+            reciboImpreso.AppendLine($"{producto.Nombre,-20} x{producto.Cantidad} {unidadTexto,-5} ${producto.Subtotal:F2}");
         }
 
         reciboImpreso.AppendLine("".PadRight(40, '-'));
@@ -95,5 +96,16 @@ public class Recibo
         return reciboImpreso.ToString();
     }
 
-    
+    private string ObtenerTextoUnidad(UnidadMedida unidad)
+    {
+        return unidad switch
+        {
+            UnidadMedida.Kilo => "kg",
+            UnidadMedida.Saco => "saco",
+            UnidadMedida.Tubo => "tubo",
+            UnidadMedida.Caja => "caja",
+            UnidadMedida.Unidad => "ud",
+            _ => ""
+        };
+    }
 }
