@@ -24,4 +24,9 @@ public class PromocionPackPrecioFijo : IPromocion
 
         return packsCompletos * ahorroPorPack;
     }
+    
+    public string ObtenerDescripcion()
+    {
+        return $"Pack {_cantidad}x${_precioFijo} en {NombreProducto}";
+    }
 }

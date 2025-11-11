@@ -78,12 +78,10 @@ public class Recibo
         }
 
         reciboImpreso.AppendLine("".PadRight(40, '-'));
-    
-        // Subtotal
+        
         decimal subtotal = Productos.Sum(p => p.Subtotal);
         reciboImpreso.AppendLine($"{"SUBTOTAL:",-30} ${subtotal:F2}");
-    
-        // Descuentos (si hay)
+        
         decimal descuentoTotal = CalcularDescuentoTotal();
         if (descuentoTotal > 0)
         {
@@ -97,8 +95,7 @@ public class Recibo
                     decimal descuento = promocion.CalcularDescuento(producto);
                     if (descuento > 0)
                     {
-                        string descripcion = ObtenerDescripcionPromocion(promocion);
-                        reciboImpreso.AppendLine($"  {descripcion,-28} -${descuento:F2}");
+                        reciboImpreso.AppendLine($"  {promocion.ObtenerDescripcion(),-28} -${descuento:F2}");
                     }
                 }
             }
@@ -113,14 +110,5 @@ public class Recibo
         return reciboImpreso.ToString();
     }
 
-    private string ObtenerDescripcionPromocion(IPromocion promocion)
-    {
-        return promocion switch
-        {
-            PromocionDescuentoPorcentual p => $"Descuento en {p.NombreProducto}",
-            PromocionLLeveXPagueX p => $"Lleve X Pague X en {p.NombreProducto}",
-            PromocionPackPrecioFijo p => $"Pack en {p.NombreProducto}",
-            _ => "Descuento"
-        };
-    }
+    
 }

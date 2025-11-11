@@ -18,4 +18,9 @@ public class PromocionDescuentoPorcentual : IPromocion
 
         return producto.Subtotal * (_porcentaje / 100m);
     }
+
+    public string ObtenerDescripcion()
+    {
+        return $"{_porcentaje}% en {NombreProducto}";
+    }
 }

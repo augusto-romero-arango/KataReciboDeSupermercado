@@ -26,4 +26,9 @@ public class PromocionLLeveXPagueX : IPromocion
 
         return unidadesGratis * producto.Precio;
     }
+    
+    public string ObtenerDescripcion()
+    {
+        return $"Lleve {_lleva} Pague {_compra} en {NombreProducto}";
+    }
 }
