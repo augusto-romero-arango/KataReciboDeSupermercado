@@ -210,5 +210,14 @@ public class ReciboDeSupermercadoTest
     
         _recibo.Total.Should().Be(1.98m);
     }
+
+    [Fact]
+    public void Si_IntentaCrearPromocionLLeveXPagueXInvalida_Debe_LanzarExcepcion()
+    {
+        Action accion = () => new PromocionLLeveXPagueX("Cepillo", compra: 3, lleva: 2);
+        
+        accion.Should().Throw<ArgumentException>()
+            .WithMessage("La cantidad de llevar debe ser mayor a la de comprar"); 
+    }
     
 }
