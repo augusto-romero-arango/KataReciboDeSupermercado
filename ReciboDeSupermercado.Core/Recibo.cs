@@ -30,17 +30,12 @@ public class Recibo
 
     public void AgregarProducto(Producto producto)
     {
-        
         var productoExistente = _productos.Find(p => p.Nombre == producto.Nombre);
 
         if (productoExistente != null)
-        {
             productoExistente.IncrementarCantidad();
-        }
         else
-        {
             _productos.Add(producto);
-        }
     }
 
     public void AplicarPromocion(Promocion promocion)
@@ -67,14 +62,14 @@ public class Recibo
 
     private void ImprimirDescuentos()
     {
-        if (_impresionDescuentos.ToString() != "")
-        {
-            _reciboImpreso.AppendLine();
-            _reciboImpreso.AppendLine("DESCUENTOS APLICADOS:");
+        if (_impresionDescuentos.ToString() == "") 
+            return;
+        
+        _reciboImpreso.AppendLine();
+        _reciboImpreso.AppendLine("DESCUENTOS APLICADOS:");
 
-            _reciboImpreso.Append(_impresionDescuentos);
-            _reciboImpreso.AppendLine(_separador);
-        }
+        _reciboImpreso.Append(_impresionDescuentos);
+        _reciboImpreso.AppendLine(_separador);
     }
 
     private void ImprimirDetalleProductosYSubtotal()
