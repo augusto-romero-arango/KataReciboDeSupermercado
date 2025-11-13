@@ -18,17 +18,9 @@ public class Recibo
 
     public IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
 
-    public decimal Total
-    {
-        get
-        {
-            decimal subtotal = Productos.Sum(p => p.Subtotal);
-            decimal descuentos = CalcularDescuentoTotal();
-            return _subtotal - _descuentoTotal;
-        }
-    }
-    
-    
+    public decimal Total => _subtotal - _descuentoTotal;
+
+
     public void AgregarProducto(Producto producto)
     {
         
@@ -47,21 +39,6 @@ public class Recibo
     public void AplicarPromocion(Promocion promocion)
     {
         _promociones.Add(promocion);
-    }
-
-    private decimal CalcularDescuentoTotal()
-    {
-        decimal total = 0m;
-
-        foreach (var producto in _productos)
-        {
-            foreach (var promocion in _promociones)
-            {
-                total += promocion.CalcularDescuento(producto);
-            }
-        }
-
-        return total;
     }
 
     public string GenerarRecibo()
