@@ -52,11 +52,21 @@ public class Recibo
     {
         ObtenerDetallesProductosYDescuentos();
 
-        _reciboImpreso.Append(_impresionProductos);
-        _reciboImpreso.AppendLine(_separador);
-        
-        _reciboImpreso.AppendLine($"{"SUBTOTAL:",-30} ${_subtotal.ToString("F2", CultureInfo.InvariantCulture)}");
+        ImprimirDetalleProductosYSubtotal();
+        ImprimirDescuentos();
+        ImprimirNetoAPagar();
 
+        return _reciboImpreso.ToString();
+    }
+
+    private void ImprimirNetoAPagar()
+    {
+        _reciboImpreso.AppendLine(_separador);
+        _reciboImpreso.AppendLine($"{"TOTAL:",-30} ${Total.ToString("F2", CultureInfo.InvariantCulture)}");
+    }
+
+    private void ImprimirDescuentos()
+    {
         if (_impresionDescuentos.ToString() != "")
         {
             _reciboImpreso.AppendLine();
@@ -65,12 +75,14 @@ public class Recibo
             _reciboImpreso.Append(_impresionDescuentos);
             _reciboImpreso.AppendLine(_separador);
         }
-        
+    }
 
+    private void ImprimirDetalleProductosYSubtotal()
+    {
+        _reciboImpreso.Append(_impresionProductos);
         _reciboImpreso.AppendLine(_separador);
-        _reciboImpreso.AppendLine($"{"TOTAL:",-30} ${Total.ToString("F2", CultureInfo.InvariantCulture)}");
         
-        return _reciboImpreso.ToString();
+        _reciboImpreso.AppendLine($"{"SUBTOTAL:",-30} ${_subtotal.ToString("F2", CultureInfo.InvariantCulture)}");
     }
 
     private void ObtenerDetallesProductosYDescuentos()
