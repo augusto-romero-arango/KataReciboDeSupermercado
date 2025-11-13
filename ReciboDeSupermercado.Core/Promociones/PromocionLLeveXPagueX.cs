@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace ReciboDeSupermercado.Core;
 
 public class PromocionLLeveXPagueX : IPromocion
@@ -30,5 +32,10 @@ public class PromocionLLeveXPagueX : IPromocion
     public string ObtenerDescripcion()
     {
         return $"Lleve {_lleva} Pague {_compra} en {NombreProducto}";
+    }
+    
+    public string ObtenerImpresionParaRecibo(IPromocion promocion, decimal descuentoAplicado)
+    {
+        return $"  {promocion.ObtenerDescripcion(),-28} -${descuentoAplicado.ToString("F2", CultureInfo.InvariantCulture)}";
     }
 }

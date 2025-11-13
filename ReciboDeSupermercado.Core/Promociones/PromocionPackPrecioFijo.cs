@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace ReciboDeSupermercado.Core;
 
 public class PromocionPackPrecioFijo : IPromocion
@@ -28,5 +30,10 @@ public class PromocionPackPrecioFijo : IPromocion
     public string ObtenerDescripcion()
     {
         return $"Pack {_cantidad}x${_precioFijo} en {NombreProducto}";
+    }
+
+    public string ObtenerImpresionParaRecibo(IPromocion promocion, decimal descuentoAplicado)
+    {
+        return $"  {promocion.ObtenerDescripcion(),-28} -${descuentoAplicado.ToString("F2", CultureInfo.InvariantCulture)}";
     }
 }

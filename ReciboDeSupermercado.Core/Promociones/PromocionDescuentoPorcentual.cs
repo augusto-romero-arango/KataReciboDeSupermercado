@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace ReciboDeSupermercado.Core;
 
 public class PromocionDescuentoPorcentual : IPromocion
@@ -22,5 +24,10 @@ public class PromocionDescuentoPorcentual : IPromocion
     public string ObtenerDescripcion()
     {
         return $"{_porcentaje}% en {NombreProducto}";
+    }
+
+    public string ObtenerImpresionParaRecibo(IPromocion promocion, decimal descuentoAplicado)
+    {
+        return $"  {promocion.ObtenerDescripcion(),-28} -${descuentoAplicado.ToString("F2", CultureInfo.InvariantCulture)}";
     }
 }
