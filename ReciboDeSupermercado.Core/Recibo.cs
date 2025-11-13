@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 
 namespace ReciboDeSupermercado.Core;
@@ -60,13 +61,13 @@ public class Recibo
         foreach (var producto in _productos)
         {
             string unidadTexto = producto.Unidad.ObtenerDescripcion();
-            reciboImpreso.AppendLine($"{producto.Nombre,-20} x{producto.Cantidad} {unidadTexto,-5} ${producto.Subtotal:F2}");
+            reciboImpreso.AppendLine($"{producto.Nombre,-20} x{producto.Cantidad} {unidadTexto,-5} ${producto.Subtotal.ToString("F2", CultureInfo.InvariantCulture)}");
         }
 
         reciboImpreso.AppendLine("".PadRight(40, '-'));
         
         decimal subtotal = Productos.Sum(p => p.Subtotal);
-        reciboImpreso.AppendLine($"{"SUBTOTAL:",-30} ${subtotal:F2}");
+        reciboImpreso.AppendLine($"{"SUBTOTAL:",-30} ${subtotal.ToString("F2", CultureInfo.InvariantCulture)}");
         
         decimal descuentoTotal = CalcularDescuentoTotal();
         if (descuentoTotal > 0)
@@ -81,7 +82,7 @@ public class Recibo
                     decimal descuento = promocion.CalcularDescuento(producto);
                     if (descuento > 0)
                     {
-                        reciboImpreso.AppendLine($"  {promocion.ObtenerDescripcion(),-28} -${descuento:F2}");
+                        reciboImpreso.AppendLine($"  {promocion.ObtenerDescripcion(),-28} -${descuento.ToString("F2", CultureInfo.InvariantCulture)}");
                     }
                 }
             }
@@ -91,7 +92,7 @@ public class Recibo
 
 
         reciboImpreso.AppendLine("".PadRight(40, '-'));
-        reciboImpreso.AppendLine($"{"TOTAL:",-30} ${Total:F2}");
+        reciboImpreso.AppendLine($"{"TOTAL:",-30} ${Total.ToString("F2", CultureInfo.InvariantCulture)}");
         
         return reciboImpreso.ToString();
     }
