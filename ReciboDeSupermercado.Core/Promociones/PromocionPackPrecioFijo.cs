@@ -2,9 +2,9 @@ using System.Globalization;
 
 namespace ReciboDeSupermercado.Core;
 
-public class PromocionPackPrecioFijo : IPromocion
+public class PromocionPackPrecioFijo : Promocion
 {
-    public string NombreProducto { get; }
+    public override string NombreProducto { get; }
     private readonly int _cantidad;
     private readonly decimal _precioFijo;
 
@@ -15,7 +15,7 @@ public class PromocionPackPrecioFijo : IPromocion
         _precioFijo = precioFijo;
     }
 
-    public decimal CalcularDescuento(Producto producto)
+    public override decimal CalcularDescuento(Producto producto)
     {
         if (producto.Nombre != NombreProducto)
             return 0m;
@@ -27,12 +27,12 @@ public class PromocionPackPrecioFijo : IPromocion
         return packsCompletos * ahorroPorPack;
     }
     
-    public string ObtenerDescripcion()
+    public override string ObtenerDescripcion()
     {
         return $"Pack {_cantidad}x${_precioFijo} en {NombreProducto}";
     }
 
-    public string ObtenerImpresionParaRecibo(decimal descuentoAplicado)
+    public override string ObtenerImpresionParaRecibo(decimal descuentoAplicado)
     {
         return $"  {ObtenerDescripcion(),-28} -${descuentoAplicado.ToString("F2", CultureInfo.InvariantCulture)}";
     }

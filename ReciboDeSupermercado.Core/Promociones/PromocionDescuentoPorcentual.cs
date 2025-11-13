@@ -2,9 +2,9 @@ using System.Globalization;
 
 namespace ReciboDeSupermercado.Core;
 
-public class PromocionDescuentoPorcentual : IPromocion
+public class PromocionDescuentoPorcentual : Promocion
 {
-    public string NombreProducto { get; }
+    public override string NombreProducto { get; }
     private readonly decimal _porcentaje;
 
     public PromocionDescuentoPorcentual(string nombreProducto, decimal porcentaje)
@@ -13,7 +13,7 @@ public class PromocionDescuentoPorcentual : IPromocion
         _porcentaje = porcentaje;
     }
 
-    public decimal CalcularDescuento(Producto producto)
+    public override decimal CalcularDescuento(Producto producto)
     {
         if (producto.Nombre != NombreProducto)
             return 0m;
@@ -21,12 +21,12 @@ public class PromocionDescuentoPorcentual : IPromocion
         return producto.Subtotal * (_porcentaje / 100m);
     }
 
-    public string ObtenerDescripcion()
+    public override string ObtenerDescripcion()
     {
         return $"{_porcentaje}% en {NombreProducto}";
     }
 
-    public string ObtenerImpresionParaRecibo(decimal descuentoAplicado)
+    public override string ObtenerImpresionParaRecibo(decimal descuentoAplicado)
     {
         return $"  {ObtenerDescripcion(),-28} -${descuentoAplicado.ToString("F2", CultureInfo.InvariantCulture)}";
     }

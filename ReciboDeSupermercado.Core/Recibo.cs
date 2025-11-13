@@ -6,7 +6,7 @@ namespace ReciboDeSupermercado.Core;
 public class Recibo
 {
     private readonly List<Producto> _productos = new();
-    private readonly List<IPromocion> _promociones = new();
+    private readonly List<Promocion> _promociones = new();
     public IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
 
     public decimal Total
@@ -34,7 +34,7 @@ public class Recibo
         }
     }
 
-    public void AplicarPromocion(IPromocion promocion)
+    public void AplicarPromocion(Promocion promocion)
     {
         _promociones.Add(promocion);
     }
