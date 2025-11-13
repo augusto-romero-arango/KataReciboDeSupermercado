@@ -69,8 +69,18 @@ public class Recibo
         reciboImpreso.AppendLine("".PadRight(40, '-'));
         
         reciboImpreso.AppendLine($"{"SUBTOTAL:",-30} ${subtotal.ToString("F2", CultureInfo.InvariantCulture)}");
-        
-        decimal descuentoTotal = CalcularDescuentoTotal();
+
+        decimal total = 0m;
+
+        foreach (var producto1 in _productos)
+        {
+            foreach (var promocion1 in _promociones)
+            {
+                total += promocion1.CalcularDescuento(producto1);
+            }
+        }
+
+        decimal descuentoTotal = total;
         if (descuentoTotal > 0)
         {
             reciboImpreso.AppendLine();
