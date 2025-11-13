@@ -34,8 +34,5 @@ public class PromocionLLeveXPagueX : Promocion
         return $"Lleve {_lleva} Pague {_compra} en {NombreProducto}";
     }
     
-    public override string ObtenerImpresionParaRecibo(decimal descuentoAplicado)
-    {
-        return $"  {ObtenerDescripcion(),-28} -${descuentoAplicado.ToString("F2", CultureInfo.InvariantCulture)}";
-    }
+    
 }

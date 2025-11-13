@@ -32,8 +32,5 @@ public class PromocionPackPrecioFijo : Promocion
         return $"Pack {_cantidad}x${_precioFijo} en {NombreProducto}";
     }
 
-    public override string ObtenerImpresionParaRecibo(decimal descuentoAplicado)
-    {
-        return $"  {ObtenerDescripcion(),-28} -${descuentoAplicado.ToString("F2", CultureInfo.InvariantCulture)}";
-    }
+    
 }
