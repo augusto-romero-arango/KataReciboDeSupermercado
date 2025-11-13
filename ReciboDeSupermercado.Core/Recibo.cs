@@ -58,29 +58,23 @@ public class Recibo
     {
         var reciboImpreso = new StringBuilder();
         var subtotal = 0m;
+        var descuentoTotal = 0m;
 
         foreach (var producto in _productos)
         {
             string unidadTexto = producto.Unidad.ObtenerDescripcion();
             reciboImpreso.AppendLine($"{producto.Nombre,-20} x{producto.Cantidad} {unidadTexto,-5} ${producto.Subtotal.ToString("F2", CultureInfo.InvariantCulture)}");
             subtotal += producto.Subtotal;
+            foreach (var promocion in _promociones)
+            {
+                descuentoTotal += promocion.CalcularDescuento(producto);
+            }
         }
 
         reciboImpreso.AppendLine("".PadRight(40, '-'));
         
         reciboImpreso.AppendLine($"{"SUBTOTAL:",-30} ${subtotal.ToString("F2", CultureInfo.InvariantCulture)}");
 
-        decimal total = 0m;
-
-        foreach (var producto1 in _productos)
-        {
-            foreach (var promocion1 in _promociones)
-            {
-                total += promocion1.CalcularDescuento(producto1);
-            }
-        }
-
-        decimal descuentoTotal = total;
         if (descuentoTotal > 0)
         {
             reciboImpreso.AppendLine();
