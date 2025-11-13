@@ -32,8 +32,8 @@ public class PromocionPackPrecioFijo : IPromocion
         return $"Pack {_cantidad}x${_precioFijo} en {NombreProducto}";
     }
 
-    public string ObtenerImpresionParaRecibo(IPromocion promocion, decimal descuentoAplicado)
+    public string ObtenerImpresionParaRecibo(decimal descuentoAplicado)
     {
-        return $"  {promocion.ObtenerDescripcion(),-28} -${descuentoAplicado.ToString("F2", CultureInfo.InvariantCulture)}";
+        return $"  {ObtenerDescripcion(),-28} -${descuentoAplicado.ToString("F2", CultureInfo.InvariantCulture)}";
     }
 }

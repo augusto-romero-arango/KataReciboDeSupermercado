@@ -72,8 +72,7 @@ public class Recibo
                 var descuentoAplicado = promocion.CalcularDescuento(producto);
                 if(descuentoAplicado>0)
                 {
-                    var impresionDescuentoAplicado = promocion.ObtenerImpresionParaRecibo(promocion, descuentoAplicado);
-                    impresionDescuentos.AppendLine(impresionDescuentoAplicado);
+                    impresionDescuentos.AppendLine(promocion.ObtenerImpresionParaRecibo(descuentoAplicado));
                 }
 
                 descuentoTotal += descuentoAplicado;
