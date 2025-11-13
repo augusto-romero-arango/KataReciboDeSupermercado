@@ -20,12 +20,10 @@ public class Recibo
     }
     
     
-    public void AgregarProducto(Producto productoDto)
+    public void AgregarProducto(Producto producto)
     {
-        var productoDescripcion = productoDto.Nombre;
-        var precio = productoDto.Precio;
-        var unidad = productoDto.Unidad;
-        var productoExistente = _productos.Find(p => p.Nombre == productoDescripcion);
+        
+        var productoExistente = _productos.Find(p => p.Nombre == producto.Nombre);
 
         if (productoExistente != null)
         {
@@ -33,7 +31,7 @@ public class Recibo
         }
         else
         {
-            _productos.Add(new Producto(productoDescripcion, precio, unidad));
+            _productos.Add(producto);
         }
     }
 
