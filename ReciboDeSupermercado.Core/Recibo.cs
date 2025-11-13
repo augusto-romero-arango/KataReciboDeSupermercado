@@ -7,6 +7,15 @@ public class Recibo
 {
     private readonly List<Producto> _productos = new();
     private readonly List<Promocion> _promociones = new();
+    private decimal _subtotal;
+    private decimal _descuentoTotal;
+
+    public Recibo()
+    {
+        _subtotal = 0m;
+        _descuentoTotal = 0m;
+    }
+
     public IReadOnlyCollection<Producto> Productos => _productos.AsReadOnly();
 
     public decimal Total
@@ -15,7 +24,7 @@ public class Recibo
         {
             decimal subtotal = Productos.Sum(p => p.Subtotal);
             decimal descuentos = CalcularDescuentoTotal();
-            return subtotal - descuentos;
+            return _subtotal - _descuentoTotal;
         }
     }
     
@@ -59,14 +68,12 @@ public class Recibo
     {
         var reciboImpreso = new StringBuilder();
         var impresionDescuentos = new StringBuilder();
-        var subtotal = 0m;
-        var descuentoTotal = 0m;
 
         foreach (var producto in _productos)
         {
             reciboImpreso.AppendLine(producto.ObtenerImpresionParaRecibo());
             
-            subtotal += producto.Subtotal;
+            _subtotal += producto.Subtotal;
             
             foreach (var promocion in _promociones)
             {
@@ -76,13 +83,13 @@ public class Recibo
                     impresionDescuentos.AppendLine(promocion.ObtenerImpresionParaRecibo(descuentoAplicado));
                 }
 
-                descuentoTotal += descuentoAplicado;
+                _descuentoTotal += descuentoAplicado;
             }
         }
 
         reciboImpreso.AppendLine("".PadRight(40, '-'));
         
-        reciboImpreso.AppendLine($"{"SUBTOTAL:",-30} ${subtotal.ToString("F2", CultureInfo.InvariantCulture)}");
+        reciboImpreso.AppendLine($"{"SUBTOTAL:",-30} ${_subtotal.ToString("F2", CultureInfo.InvariantCulture)}");
 
         if (impresionDescuentos.ToString() != "")
         {

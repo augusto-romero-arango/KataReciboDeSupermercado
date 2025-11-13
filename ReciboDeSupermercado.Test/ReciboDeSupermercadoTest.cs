@@ -28,6 +28,7 @@ public class ReciboDeSupermercadoTest
             _recibo.AgregarProducto(new Producto(producto.Nombre, producto.Precio));
         }
 
+        _recibo.GenerarRecibo();
         _recibo.Total.Should().Be(productosTestDatos.TotalEsperado);
     }
 
@@ -45,6 +46,8 @@ public class ReciboDeSupermercadoTest
     {
         _recibo.AgregarProducto(new Producto("Cepillo de dientes", 0.99m));
         _recibo.AgregarProducto(new Producto("Cepillo de dientes", 0.99m));
+        
+        _recibo.GenerarRecibo();
 
         _recibo.Total.Should().Be(0.99m * 2);
     }
@@ -100,6 +103,8 @@ public class ReciboDeSupermercadoTest
         _recibo.AgregarProducto(new Producto("Arroz", 2.49m));
         _recibo.AplicarPromocion(new PromocionDescuentoPorcentual("Arroz", porcentaje: 10m));
         
+        _recibo.GenerarRecibo();
+        
         _recibo.Total.Should().Be(2.241m);
     }
 
@@ -111,6 +116,8 @@ public class ReciboDeSupermercadoTest
         _recibo.AgregarProducto(new Producto("Arroz", 2.49m));
         
         _recibo.AplicarPromocion(new PromocionDescuentoPorcentual("Arroz", porcentaje: 10m));
+        
+        _recibo.GenerarRecibo();
         
         _recibo.Total.Should().Be(6.723m);
     }
@@ -124,6 +131,8 @@ public class ReciboDeSupermercadoTest
         _recibo.AgregarProducto(new Producto("Manzanas", 1.99m));
         _recibo.AplicarPromocion(new PromocionDescuentoPorcentual("Manzanas", 20m));
         
+        _recibo.GenerarRecibo();
+        
         _recibo.Total.Should().Be(3.833m); 
     }
 
@@ -135,6 +144,8 @@ public class ReciboDeSupermercadoTest
         _recibo.AgregarProducto(new Producto("Cepillo de dientes", 0.99m));
     
         _recibo.AplicarPromocion(new PromocionLLeveXPagueX("Cepillo de dientes", compra: 2, lleva: 3));
+        
+        _recibo.GenerarRecibo();
         
         _recibo.Total.Should().Be(1.98m);
     }
@@ -150,6 +161,8 @@ public class ReciboDeSupermercadoTest
         
         _recibo.AplicarPromocion(new PromocionPackPrecioFijo("Pasta de dientes", cantidad: 5, precioFijo: 7.49m));
         
+        _recibo.GenerarRecibo();
+        
         _recibo.Total.Should().Be(7.49m);
     }
 
@@ -162,6 +175,8 @@ public class ReciboDeSupermercadoTest
         }
         
         _recibo.AplicarPromocion(new PromocionPackPrecioFijo("Pasta de dientes", cantidad:5, precioFijo: 7.49m));
+
+        _recibo.GenerarRecibo();
         
         _recibo.Total.Should().Be(11.07m);
     }
@@ -175,6 +190,8 @@ public class ReciboDeSupermercadoTest
         }
         _recibo.AplicarPromocion(new PromocionPackPrecioFijo("Pasta de dientes", cantidad: 5, precioFijo: 7.49m));
         
+        _recibo.GenerarRecibo();
+        
         _recibo.Total.Should().Be(14.98m);
     }
 
@@ -186,6 +203,8 @@ public class ReciboDeSupermercadoTest
         
         _recibo.AplicarPromocion(new PromocionPackPrecioFijo("Tomates cherry", cantidad: 2, precioFijo: 0.99m));
         
+        _recibo.GenerarRecibo();
+        
         _recibo.Total.Should().Be(0.99m);
     }
     
@@ -196,6 +215,8 @@ public class ReciboDeSupermercadoTest
             _recibo.AgregarProducto(new Producto("Tomates cherry", 0.50m));
     
         _recibo.AplicarPromocion(new PromocionPackPrecioFijo("Tomates cherry", cantidad: 2, precioFijo: 0.99m));
+        
+        _recibo.GenerarRecibo();
     
         _recibo.Total.Should().Be(1.49m);
     }
@@ -207,6 +228,8 @@ public class ReciboDeSupermercadoTest
             _recibo.AgregarProducto(new Producto("Tomates cherry", 0.50m));
         
         _recibo.AplicarPromocion(new PromocionPackPrecioFijo("Tomates cherry", cantidad: 2, precioFijo: 0.99m));
+        
+        _recibo.GenerarRecibo();
     
         _recibo.Total.Should().Be(1.98m);
     }
